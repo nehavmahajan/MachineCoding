@@ -1,0 +1,22 @@
+import model.User;
+import model.Vehicle;
+import repository.VehicleType;
+import service.modelObjectsCreationService;
+
+public class Driver {
+	public modelObjectsCreationService mocs = null;
+	public static void main(String[] args)	{
+		mocs.addUser(1,"nehamahajan@gmail.com","Neha","Nashik",763457, "ABC");
+		mocs.addUser(2,"nm@gmail.com","Nm","Nashik",764568,"nm");
+		
+		 
+		Vehicle v= new Vehicle();
+		v.setVehicleId(1);
+		v.setUser(u);
+		v.setVehicleType(VehicleType.SEDAN);
+		
+		
+	}
+
+		
+}

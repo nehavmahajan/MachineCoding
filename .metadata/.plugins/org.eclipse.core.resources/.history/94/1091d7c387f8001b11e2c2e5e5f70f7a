@@ -1,0 +1,36 @@
+package service;
+import java.util.HashMap;
+
+import exceptions.DuplicateUserException;
+import model.User;
+
+public class accountsService {
+	public HashMap<Integer, User> userMap = new HashMap<Integer, User>();
+	
+	public void registerUser(User u) throws Exception {
+		if(userMap.containsKey(u.getUid())) {
+			throw new DuplicateUserException("User already exists");
+		}
+		else {
+			userMap.put(u.getUid(), u);
+		}
+	}
+	public void deleteUser(User u) throws Exception {
+		if(!userMap.containsKey(u.getUid())) {
+			throw new DuplicateUserException("User not Exist in Database");
+		}
+		else {
+			userMap.remove(u.getUid());
+		}
+	}
+	
+	public void resetPassword(User u, String pwd) throws Exception {
+		if(!userMap.containsKey(u.getUid())) {
+			throw new DuplicateUserException("User dont exist");
+		}
+		else {
+			u.setPwd(pwd);
+			userMap.put(u.getUid(), u);
+		}
+	}
+}

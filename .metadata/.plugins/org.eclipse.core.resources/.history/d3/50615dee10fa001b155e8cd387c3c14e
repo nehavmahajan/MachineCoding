@@ -1,0 +1,31 @@
+package services;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Vector;
+
+import exceptions.UserNotExistException;
+import models.Restaurant;
+import repository.sortRestaurantByPrice;
+import repository.sortRestaurantByRating;
+
+public class showRestaurantServiceImpl {
+	private static showRestaurantServiceImpl showRestaurantServiceImpl = null;
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private UserServiceImpl userSvc = UserServiceImpl.getInstance();
+	
+	private showRestaurantServiceImpl() {}
+	
+	public static showRestaurantServiceImpl getInstance() {
+		if(showRestaurantServiceImpl == null ) {
+			return new showRestaurantServiceImpl();
+		}
+		else {
+			return showRestaurantServiceImpl;
+		}
+	}
+	
+	
+
+	
+}

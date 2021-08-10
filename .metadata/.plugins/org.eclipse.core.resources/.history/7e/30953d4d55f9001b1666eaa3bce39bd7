@@ -1,0 +1,12 @@
+package services;
+
+public class OrderServiceImpl {
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private OrderServiceImpl() {
+	
+	}
+	
+	public void placeOrder(String restaurantName, int quantity) {
+		
+	}
+}

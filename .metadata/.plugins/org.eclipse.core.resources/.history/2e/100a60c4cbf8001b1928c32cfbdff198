@@ -1,0 +1,13 @@
+package service;
+
+import model.User;
+import service.accountsService;
+
+public class modelObjectsCreationService {
+	private accountsService accountService = null;
+	public void addUser(int i, String string, String string2, String string3, int j, String string4) throws Exception {
+		User u1 = new User(i,string, string2,string3,j,string4);
+		accountService.registerUser(u1);
+	}
+	
+}

@@ -1,0 +1,15 @@
+package repository;
+
+import java.util.Comparator;
+
+public class sortRestaurantByRating implements Comparator {
+
+	public sortRestaurantByRating() {}
+	@Override
+	public int compare(Restaurant o1, Restaurant o2) {
+		
+		
+		return 0;
+	}
+
+}

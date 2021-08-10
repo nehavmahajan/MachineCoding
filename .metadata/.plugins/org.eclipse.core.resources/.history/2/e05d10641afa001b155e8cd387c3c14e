@@ -1,0 +1,71 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
+
+import exceptions.UserNotExistException;
+import models.Restaurant;
+import models.User;
+import repository.Gender;
+
+public class UserServiceImpl {
+	private static UserServiceImpl userSvc = null;
+	public static HashMap<String, User> userMap = null;
+	static {
+		userMap = new HashMap<String,User>();
+	}
+	private UserServiceImpl() {
+		
+	}
+	/*---------------------------------------------------------------------*/
+	
+	public void setUserMap(HashMap<String,User> UserMap) {
+		UserServiceImpl.userMap = UserMap;
+	}
+	public HashMap<String,User> getUserMap(){
+		return UserServiceImpl.userMap;
+	}
+	/*----------------------------------------------------------------------*/
+	
+	public static UserServiceImpl getInstance() {
+		if(userSvc == null ) {
+			return new UserServiceImpl();
+		}
+		else {
+			return userSvc;
+		}
+	}
+	
+	public List<String> getPinCodes(String pincode) {
+		String [] pincodes = pincode.split("\\");
+		ArrayList<String> pins = new ArrayList<String>();
+		for(String i : pincodes) {
+			pins.add(i);
+		}
+		return pins;
+	}
+	
+	public void registerUser(String name, Gender gender ,String phoneNumber, String pincode ) {
+		if(phoneNumber.length() > 10) {
+			System.out.println("Invalid Phone Number");
+			return;
+		}
+		if( name == "" || pincode == "") {
+			System.out.println("Invalid Input Received");
+			return;
+		}
+		User  u = new User(name, gender, phoneNumber, pincode);
+		this.getUserMap().put(phoneNumber, u);
+	}
+	
+	public String login(String phoneNumber) throws UserNotExistException {
+		if(!UserServiceImpl.userMap.containsKey(phoneNumber)) {
+			throw new UserNotExistException("User is not present in System");
+		}
+		System.out.println("------------------------------------------\nLogin Success"+phoneNumber);
+		return phoneNumber;
+	}
+	
+}

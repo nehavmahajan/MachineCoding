@@ -1,0 +1,44 @@
+import java.util.Vector;
+
+import model.User;
+import model.Vehicle;
+import repository.BookingDuration;
+import repository.BookingMode;
+import repository.VehicleType;
+import service.getAvailableVehiclesService;
+import service.modelObjectsCreationService;
+
+public class Driver {
+	
+	public static void main(String[] args) throws Exception	{
+		modelObjectsCreationService mocs= null;
+		getAvailableVehiclesService getAvailableVehicleSvc = null;
+		vehicleService vehicleService = null;
+		//Vehicle v = null;
+		mocs.addUser(1,"nehamahajan@gmail.com","Neha","Nashik",763457, "ABC");
+		mocs.addUser(2,"nm@gmail.com","Nm","Nashik",764568,"nm");
+		mocs.addVehicles(1,VehicleType.SUV, null, 2 );
+		mocs.addVehicles(2,VehicleType.SEDAN, null, 3);
+		
+		Vector<Vehicle> vehicle = getAvailableVehicleSvc.getAvailableVehicles();
+		System.out.println("Available for Booking are :");
+		for(Vehicle v : vehicle ) {
+			System.out.println(v.getVehicleType()+", "+v.getAvailability()+", "+ v.getVehicleId());
+		}
+		System.out.println("Enter Details to Book Your Vehicle :");
+		int vehicleId;
+		int userId;
+		String bookingTitle;
+		int appointmentDate;
+		String src;
+		String dest;
+		BookingDuration bookingDuration;
+		BookingMode bookingMode;
+		
+		
+		//PizzaSize pizzaSize = PizzaSize.valueOf(pizzaSizeStr.toUpperCase());
+		vehicleService.pickVehicle(vehicleId,userId, bookingTitle, appointmentDate, src, dest,bookingDuration, bookingMode);
+	}
+
+		
+}

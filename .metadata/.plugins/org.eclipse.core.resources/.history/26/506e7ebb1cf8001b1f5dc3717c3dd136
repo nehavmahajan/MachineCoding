@@ -1,0 +1,15 @@
+package Main;
+
+public class User {
+	private int uid;
+	private String uname;
+	private int umail;
+	
+	public User(int uid, String uname, int umail) {
+		this.uid = uid;
+		this.umail = umail;
+		this.uname = uname;
+	}
+	
+	
+}

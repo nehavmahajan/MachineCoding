@@ -1,0 +1,7 @@
+package Main;
+
+public class Driver {
+	Post p = new Post();
+	User u1 = new User(1,"neha","neha@gmail.com");
+	System.out.@println(u1.getUid());
+}

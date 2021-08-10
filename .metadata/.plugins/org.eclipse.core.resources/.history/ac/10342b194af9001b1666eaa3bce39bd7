@@ -1,0 +1,37 @@
+package services;
+
+import java.util.ArrayList;
+
+import models.Restaurant;
+
+public class RestaurantServiceImpl {
+	private static RestaurantServiceImpl restaurantServiceImpl = null;
+	private RestaurantServiceImpl() {	
+	}
+	public static RestaurantServiceImpl getInstance() {
+		if(restaurantServiceImpl == null) {
+			return new RestaurantServiceImpl();
+		}
+		else {
+			return restaurantServiceImpl;
+		}
+	}
+	
+	public Restaurant registerRestaurant(String resturantName,String pinCodes, String foodItem, int foodItemPrice , int quantity) {
+		if(resturantName== "" || pinCodes == "" || foodItem == "" ) {
+			System.out.println("Input is incorrect");
+			return null;
+		}
+		return new Restaurant(restaurantName, getPinCodes(pinCodes) , foodItem, foodItemPrice, quantity) ;
+		
+	}
+	private ArrayList<String> getPinCodes(String pinCodes) {
+		ArrayList<String>  pinCodeList = new ArrayList<String>();
+		String [] pins = pinCodes.split("\\");
+		for(String  i : pins) {
+			pinCodeList.add(i);
+		}
+		return pinCodeList;
+	}
+	
+}

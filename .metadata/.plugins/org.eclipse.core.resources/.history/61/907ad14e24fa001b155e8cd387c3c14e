@@ -1,0 +1,69 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import models.Restaurant;
+
+public class RestaurantServiceImpl {
+	private static RestaurantServiceImpl restaurantServiceImpl = null;
+	
+	private RestaurantServiceImpl() {}
+	
+	public static RestaurantServiceImpl getInstance() {
+		if(restaurantServiceImpl == null) {
+			return new RestaurantServiceImpl();
+		}
+		else {
+			return restaurantServiceImpl;
+		}
+	}
+	
+	/*-----------------------------------------------------------------------------------*/
+	
+	public void registerRestaurant(String resturantName,String pinCodes, String foodItem, int foodItemPrice , int quantity,String userId) {
+		if(resturantName== "" || pinCodes == "" || foodItem == "" ) {
+			System.out.println("Input is incorrect");
+		}
+		Restaurant r = new Restaurant(resturantName, getPinCodes(pinCodes) , foodItem, foodItemPrice, quantity,userId) ;
+		this.getRestoMap().put(resturantName, r);
+	}
+	
+	/*-------------------------------------------------------------------------------------*/
+	
+	public void updateQuantity(String restoName, int quantity) {
+		restoMap.get(restoName).setQuantity(quantity+restoMap.get(restoName).getQuantity());
+		System.out.println("\nQuantity Updated :\n");
+		System.out.println("Name:"+ restoMap.get(restoName).getResturantName()+",Item : "+restoMap.get(restoName).getFoodItem()+
+				",Quantity : "+restoMap.get(restoName).getQuantity());
+	}
+	
+	/*-------------------------------------------------------------------------------------*/
+	
+	private ArrayList<String> getPinCodes(String pinCodes) {
+		ArrayList<String>  pinCodeList = new ArrayList<String>();
+		String [] pins = pinCodes.split("/");
+		for(String  i : pins) {
+			pinCodeList.add(i);
+		}
+		return pinCodeList;
+	}
+	
+	/*-------------------------------------------------------------------------------------*/
+	
+	public void updateLocation(String restoName, String pinCodes) {
+		restoMap.get(restoName).setPinCodes(getPinCodes(pinCodes));
+		System.out.println("\nLocation Updated :");
+		System.out.println("Name : "+ restoMap.get(restoName).getResturantName()+"Item :"+restoMap.get(restoName).getFoodItem()+", PinCodes :"+restoMap.get(restoName).getPinCodes());
+	}
+	
+	
+	/*------------------------------------------------------------------------------*/
+	
+	public HashMap<String,Restaurant> getRestoMap() {
+		return RestaurantServiceImpl.restoMap;
+	}
+	public void setRestoMap(HashMap<String,Restaurant> restoMap) {
+		RestaurantServiceImpl.restoMap = restoMap;
+	}
+	
+}

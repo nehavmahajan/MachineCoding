@@ -1,0 +1,13 @@
+package repository;
+
+import java.util.HashMap;
+
+import models.User;
+
+public class DB {
+	private static HashMap<String, User> userMap = null;
+	
+	static {
+		userMap = new HashMap<String,User>();
+	}
+}

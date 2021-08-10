@@ -1,0 +1,7 @@
+package exceptions;
+
+public class VehicleNotPresentException extends Exception {
+	public VehicleNotPresentException(String msg ) {
+		super(msg);
+	}
+}

@@ -1,0 +1,57 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+
+import models.Rating;
+import models.Restaurant;
+
+public class RestaurantServiceImpl {
+	private static RestaurantServiceImpl restaurantServiceImpl = null;
+	private HashMap<String,Restaurant> restoMap = null;
+	
+	private RestaurantServiceImpl() {
+		setRestoMap(new HashMap<String,Restaurant>());
+	}
+	public static RestaurantServiceImpl getInstance() {
+		if(restaurantServiceImpl == null) {
+			return new RestaurantServiceImpl();
+		}
+		else {
+			return restaurantServiceImpl;
+		}
+	}
+	
+	public Restaurant registerRestaurant(String resturantName,String pinCodes, String foodItem, int foodItemPrice , int quantity,String userId) {
+		if(resturantName== "" || pinCodes == "" || foodItem == "" ) {
+			System.out.println("Input is incorrect");
+			return null;
+		}
+		return new Restaurant(resturantName, getPinCodes(pinCodes) , foodItem, foodItemPrice, quantity,userId) ;
+	}
+	
+	private ArrayList<String> getPinCodes(String pinCodes) {
+		ArrayList<String>  pinCodeList = new ArrayList<String>();
+		String [] pins = pinCodes.split("\\");
+		for(String  i : pins) {
+			pinCodeList.add(i);
+		}
+		return pinCodeList;
+	}
+	
+	public void AddReview(String restoName, int userId,int point, String comment) {
+		Restaurant resto = this.restoMap.get(restoName);
+		resto.setRating(new Rating(point, comment,userId));
+	}
+	
+	/*------------------------------------------------------------------------------*/
+	
+	public HashMap<String,Restaurant> getRestoMap() {
+		return restoMap;
+	}
+	public void setRestoMap(HashMap<String,Restaurant> restoMap) {
+		this.restoMap = restoMap;
+	}
+	
+}

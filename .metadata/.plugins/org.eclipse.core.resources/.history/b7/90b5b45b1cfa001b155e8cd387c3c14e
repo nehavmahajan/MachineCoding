@@ -1,0 +1,66 @@
+package services;
+
+import java.util.UUID;
+import java.util.Vector;
+
+import models.Order;
+
+public class OrderServiceImpl {
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
+	private static OrderServiceImpl orderServiceImpl =null;
+	private Vector<Order> orders ;
+	private OrderServiceImpl() {
+		orders = new Vector<Order>();
+	}
+	public static OrderServiceImpl getInstance() {
+		if(orderServiceImpl == null) {
+			return new OrderServiceImpl();
+		}
+		else {
+			return orderServiceImpl;
+		}
+	}
+	
+	/*------------------------------------------------------------------------------------------------*/
+	
+	public void placeOrder(String userID,String restaurantName, int quantity) {
+		UUID orderId = UUID.randomUUID();
+		Order o1 = new Order(orderId,restaurantName, quantity,userID);
+		UserServiceImpl.userMap.get(userID).getOrder().add(o1);
+		this.getOrders().add(o1);
+		if(RestaurantServiceImpl.restoMap.get(restaurantName).getQuantity() < quantity) {
+			System.out.println("\nQuantity is not valid! order cant be placed");
+			return;
+		}
+		RestaurantServiceImpl.restoMap.get(restaurantName).setQuantity(
+				RestaurantServiceImpl.restoMap.get(restaurantName).getQuantity()-quantity);
+		System.out.println("\nOrder placed! ");
+	}
+	
+	/*-------------------------------------------------------------------------------------------------*/
+	
+	public void showMyOrders(String userID) {
+		System.out.println("\nMy Orders "+ userID );
+		Vector<Order> order = this.getOrders();
+		if(order.isEmpty()) {
+			System.out.println("No Orders for this user");
+			return;
+		}
+		for(Order o : order) {
+			if(o.getUserId() == userID) {
+				System.out.println("Restaurant :"+o.getRestoName() +",Quantity: "+o.getQuantity()+"");
+			}
+		}
+	}
+	
+	/*-------------------------------------------------------------------------------------------------*/
+	
+	public Vector<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(Vector<Order> orders) {
+		this.orders = orders;
+	}
+	
+}

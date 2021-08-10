@@ -1,0 +1,34 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import models.Rating;
+
+public class RatingServiceImpl {
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
+	private static RatingServiceImpl ratingServiceImpl =null;
+	private HashMap<String,ArrayList<Rating>> ratingMap = null;
+	private RatingServiceImpl() {
+		setRatingMap(new HashMap<String,ArrayList<Rating>>());
+	}
+	public static RatingServiceImpl getInstance() {
+		if(ratingServiceImpl == null) {
+			return new RatingServiceImpl();
+		}
+		else {
+			return ratingServiceImpl;
+		}
+	}
+	
+	public void createReview(String restoName, int ranking, String comment,String userId) {
+		
+	}
+	public HashMap<String,ArrayList<Rating>> getRatingMap() {
+		return ratingMap;
+	}
+	public void setRatingMap(HashMap<String,ArrayList<Rating>> ratingMap) {
+		this.ratingMap = ratingMap;
+	}
+}

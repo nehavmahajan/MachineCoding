@@ -1,0 +1,52 @@
+package services;
+
+import java.util.UUID;
+import java.util.Vector;
+
+import models.Order;
+
+public class OrderServiceImpl {
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
+	private static OrderServiceImpl orderServiceImpl =null;
+	private Vector<Order> orders;
+	private OrderServiceImpl() {
+		orders = new Vector<Order>();
+	}
+	public static OrderServiceImpl getInstance() {
+		if(orderServiceImpl == null) {
+			return new OrderServiceImpl();
+		}
+		else {
+			return orderServiceImpl;
+		}
+	}
+	public void placeOrder(String userID,String restaurantName, int quantity) {
+		UUID orderId = UUID.randomUUID();
+		Order o1 = new Order(orderId,restaurantName, quantity,userID);
+		userServiceImpl.getUserMap().get(userID).getOrder().add(o1);
+		this.getOrders().add(o1);
+		if(restaurantServiceImpl.getRestoMap().get(restaurantName).getQuantity() > quantity) {
+			System.out.println("Quantity is not valid! order cant be placed");
+			return;
+		}
+		restaurantServiceImpl.getRestoMap().get(restaurantName).setQuantity(
+				restaurantServiceImpl.getRestoMap().get(restaurantName).getQuantity()-quantity);
+		System.out.println("Order placed ");
+	}
+	public void showMyOrders(String userID) {
+		Vector<Order> order = this.getOrders();
+		for(Order o : order) {
+			if(o.getUserId() == userID) {
+				System.out.println(o.getRestoName() +"- "+o.getQuantity()+"- ");
+			}
+		}
+	}
+	public Vector<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(Vector<Order> orders) {
+		this.orders = orders;
+	}
+	
+}

@@ -1,0 +1,39 @@
+package service;
+
+import java.util.HashMap;
+import java.util.Vector;
+
+import exceptions.VehicleNotPresentException;
+import model.Booking;
+import model.Vehicle;
+
+public class vehicleBookingService {
+	private adminService adminService = null;
+	
+	public void bookVehicle(Booking b) {
+		b.getVehicle().setAvailability(b.getVehicle().getAvailability()-1);
+		Vector<Booking> v = b.getUser().getBooking();
+		v.add(b);	
+		b.getUser().setBooking(v);
+	}
+	
+	public void returnVehicle(int vehicleId ) throws VehicleNotPresentException {
+		HashMap<Integer , Vehicle > vehicleMap = adminService.getVehicleMap();
+		try {
+			if(!vehicleMap.containsKey(vehicleId)) {
+				throw new VehicleNotPresentException("\nVehicle is not in the list\n");
+			}
+			else {
+				Integer availability = vehicleMap.get((Integer)vehicleId).getAvailability()+1;
+				vehicleMap.get((Integer)vehicleId).setAvailability(availability);
+				adminService.setVehicleMap(vehicleMap);
+			}
+		} catch (VehicleNotPresentException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void getAvailableVehicles() {
+		
+	}
+}

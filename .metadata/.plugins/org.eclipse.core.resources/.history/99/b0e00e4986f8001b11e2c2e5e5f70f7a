@@ -1,0 +1,63 @@
+package service;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Vector;
+
+import exceptions.VehicleNotPresentException;
+import model.Booking;
+import model.User;
+import model.Vehicle;
+import repository.BookingDuration;
+import repository.BookingMode;
+
+public class vehicleBookingService {
+	private adminService adminService = null;
+	LinkedList<Booking> bookingList = new LinkedList<Booking>();
+	
+	public void pickVehicle(int vehicleId,String bookingTitle, int appointmentDate, String src, String dest,
+			BookingDuration bookingDuration, Vehicle vehicle, User user, BookingMode bookingMode) {
+		
+		LocalDateTime currDate = java.time.LocalDateTime.now();
+		Booking b1 = new Booking(bookingTitle,currDate, appointmentDate, src, dest, bookingDuration, vehicle, user, bookingMode);
+		bookingList.add(b1);
+		bookVehicle(b1);
+	}
+	public void bookVehicle(Booking b) {
+		b.getVehicle().setAvailability(b.getVehicle().getAvailability()-1);
+		Vector<Booking> v = b.getUser().getBooking();
+		v.add(b);	
+		b.getUser().setBooking(v);
+	}
+	
+	public void returnVehicle(int vehicleId ) throws VehicleNotPresentException {
+		HashMap<Integer , Vehicle > vehicleMap = adminService.getVehicleMap();
+		try {
+			if(!vehicleMap.containsKey(vehicleId)) {
+				throw new VehicleNotPresentException("\nVehicle is not in the list\n");
+			}
+			else {
+				Integer availability = vehicleMap.get((Integer)vehicleId).getAvailability()+1;
+				vehicleMap.get((Integer)vehicleId).setAvailability(availability);
+				adminService.setVehicleMap(vehicleMap);
+			}
+		} catch (VehicleNotPresentException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("null")
+	public Vector<Vehicle> getAvailableVehicles() {
+		Vector<Vehicle> available = null ;
+		HashMap<Integer , Vehicle> vehicleMap = adminService.getVehicleMap();
+		Iterator<Vehicle> iterator;
+		for (iterator = vehicleMap.values().iterator(); iterator.hasNext(); ) {
+			if(iterator.next().getAvailability() > 0) {
+				available.add(iterator.next());
+			}
+		}
+		return available;
+	}
+}

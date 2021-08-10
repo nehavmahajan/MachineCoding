@@ -1,0 +1,18 @@
+package services;
+
+public class RatingServiceImpl {
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
+	private static RatingServiceImpl ratingServiceImpl =null;
+	private RatingServiceImpl() {
+	
+	}
+	public static RatingServiceImpl getInstance() {
+		if(orderServiceImpl == null) {
+			return new ratingServiceImpl();
+		}
+		else {
+			return ratingServiceImpl;
+		}
+	}
+}

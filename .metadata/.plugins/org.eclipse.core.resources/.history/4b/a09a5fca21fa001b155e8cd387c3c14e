@@ -1,0 +1,49 @@
+package repository;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Vector;
+
+import models.Order;
+import models.Rating;
+import models.Restaurant;
+import models.User;
+
+public class DB {
+	private HashMap<String, User> userMap = null;
+	private HashMap<String,ArrayList<Rating>> ratingMap = null;
+	private Vector<Order> orders ;
+	public HashMap<String,Restaurant> restoMap = null;
+	
+	public DB() {
+		userMap = new HashMap<String,User>();
+		ratingMap = new HashMap<String, ArrayList<Rating>>();
+		orders = new Vector<Order>();
+		restoMap= new HashMap<String,Restaurant>();
+	}
+	
+	public HashMap<String, User> getUserMap() {
+		return userMap;
+	}
+	public void setUserMap(HashMap<String, User> userMap) {
+		this.userMap = userMap;
+	}
+	public HashMap<String, ArrayList<Rating>> getRatingMap() {
+		return ratingMap;
+	}
+	public void setRatingMap(HashMap<String, ArrayList<Rating>> ratingMap) {
+		this.ratingMap = ratingMap;
+	}
+	public Vector<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(Vector<Order> orders) {
+		this.orders = orders;
+	}
+	public HashMap<String, Restaurant> getRestoMap() {
+		return restoMap;
+	}
+	public void setRestoMap(HashMap<String, Restaurant> restoMap) {
+		this.restoMap = restoMap;
+	}
+}

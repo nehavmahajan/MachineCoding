@@ -1,0 +1,27 @@
+package service;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
+
+import model.Vehicle;
+
+public class getAvailableVehiclesService {
+	private adminService adminService = null;
+	public static Vector<Vehicle> available = new Vector<Vehicle>();
+	public getAvailableVehiclesService() {
+		adminService = new adminService();
+	}
+	
+	public Vector<Vehicle> getAvailableVehicles() {
+		
+		HashMap<Integer , Vehicle> vehicleMap = adminService.getVehicleMap();
+		Iterator<Vehicle> iterator ;
+		for (iterator = vehicleMap.values().iterator(); iterator.hasNext(); ) {
+			if(iterator.next().getAvailability() > 0) {
+				available.add(iterator.next());
+			}
+		}
+		return available;
+	}
+}

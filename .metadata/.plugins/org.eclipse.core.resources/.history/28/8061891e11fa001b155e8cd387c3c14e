@@ -1,0 +1,81 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.Vector;
+
+import models.Rating;
+import models.Restaurant;
+import repository.sortRestaurantByPrice;
+import repository.sortRestaurantByRating;
+
+public class RestaurantServiceImpl {
+	private static RestaurantServiceImpl restaurantServiceImpl = null;
+	public HashMap<String,Restaurant> restoMap = null;
+	
+	private RestaurantServiceImpl() {
+		restoMap= new HashMap<String,Restaurant>();
+	}
+	public static RestaurantServiceImpl getInstance() {
+		if(restaurantServiceImpl == null) {
+			return new RestaurantServiceImpl();
+		}
+		else {
+			return restaurantServiceImpl;
+		}
+	}
+	
+	public void registerRestaurant(String resturantName,String pinCodes, String foodItem, int foodItemPrice , int quantity,String userId) {
+		if(resturantName== "" || pinCodes == "" || foodItem == "" ) {
+			System.out.println("Input is incorrect");
+		}
+		Restaurant r = new Restaurant(resturantName, getPinCodes(pinCodes) , foodItem, foodItemPrice, quantity,userId) ;
+		this.getRestoMap().put(resturantName, r);
+	}
+	public void updateQuantity(String restoName, int quantity) {
+		this.restoMap.get(restoName).setQuantity(quantity);
+		System.out.println(restoMap.get(restoName).getResturantName()+"-"+restoMap.get(restoName).getFoodItem()+"-"+restoMap.get(restoName).getQuantity());
+	}
+	private ArrayList<String> getPinCodes(String pinCodes) {
+		ArrayList<String>  pinCodeList = new ArrayList<String>();
+		String [] pins = pinCodes.split("/");
+		for(String  i : pins) {
+			pinCodeList.add(i);
+		}
+		return pinCodeList;
+	}
+	public void updateLocation(String restoName, String pinCodes) {
+		this.getRestoMap().get(restoName).setPinCodes(getPinCodes(pinCodes));
+		System.out.println(restoMap.get(restoName).getResturantName()+"-"+restoMap.get(restoName).getFoodItem()+"-"+restoMap.get(restoName).getPinCodes());
+	}
+	
+	public Vector<Restaurant> sortRestaurant(String param ) {
+		Vector<Restaurant> resto = new Vector<Restaurant>();
+		Collection<Restaurant> restoCollection =  this.getRestoMap().values();
+		for(Restaurant r : restoCollection) {
+			resto.add(r);
+		}
+		if(param.equals("")) {
+			System.out.println("Please take correct Choice");
+		}
+		if(param.equals("rating")) {
+			Collections.sort(resto, new sortRestaurantByRating());
+		}
+		else {
+			Collections.sort(resto, new sortRestaurantByPrice());
+		}
+		return resto;
+	}
+	/*------------------------------------------------------------------------------*/
+	
+	public HashMap<String,Restaurant> getRestoMap() {
+		return restoMap;
+	}
+	public void setRestoMap(HashMap<String,Restaurant> restoMap) {
+		this.restoMap = restoMap;
+	}
+	
+}

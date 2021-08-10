@@ -1,0 +1,19 @@
+package models;
+
+public class Order {
+	private int orderId;
+	private String restoName;
+	private int quantity;
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+	public String getRestoName() {
+		return restoName;
+	}
+	public void setRestoName(String restoName) {
+		this.restoName = restoName;
+	}
+}

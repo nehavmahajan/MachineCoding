@@ -1,0 +1,32 @@
+package service;
+
+import java.util.HashMap;
+import java.util.Vector;
+
+import exceptions.VehicleNotPresentException;
+import model.Booking;
+import model.Vehicle;
+
+public class vehicleBookingService {
+	
+	public void bookVehicle(Booking b) {
+		/* this will update status in Vehicle obj && add booking in Users object */
+		b.getVehicle().setAvailability(b.getVehicle().getAvailability()-1);
+		Vector<Booking> v = b.getUser().getBooking();
+		v.add(b);	
+		b.getUser().setBooking(v);
+	}
+	public void returnVehicle(int vehicleId ) {
+		HashMap<Integer , Vehicle > vehicleMap = adminService.getVehicleMap();
+		if(!vehicleMap.containsKey(vehicleId)) {
+			throw new VehicleNotPresentException("vehicle is not in the list");
+		}
+		else {
+			
+		}
+	}
+	
+	public void getAvailableVehicles() {
+		
+	}
+}

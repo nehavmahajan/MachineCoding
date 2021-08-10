@@ -1,0 +1,17 @@
+package services;
+
+public class RestaurantServiceImpl {
+	private static RestaurantServiceImpl restaurantServiceImpl = null;
+	private RestaurantServiceImpl() {
+		
+	}
+	public static RestaurantServiceImpl getInstance() {
+		if(restaurantServiceImpl == null) {
+			return new RestaurantServiceImpl();
+		}
+		else {
+			return restaurantServiceImpl;
+		}
+	}
+	
+}

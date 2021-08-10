@@ -1,0 +1,26 @@
+package service;
+
+import java.util.HashMap;
+
+import exceptions.VehicleNotPresentException;
+import model.Vehicle;
+
+public class adminService {
+	public static HashMap<Integer , Vehicle> vehicleMap = new HashMap<Integer, Vehicle>();
+	public void addVehicle(Vehicle v) {
+		vehicleMap.put(v.getVehicleId(), v);
+	}
+	public static HashMap<Integer,Vehicle> getVehicleMap(){
+		return vehicleMap;
+	}
+	public void removeVehicle(int vehicleId) throws Exception {
+		Integer key = (Integer)vehicleId;
+		if(vehicleMap.containsKey(key)){
+			vehicleMap.remove(key);
+		}
+		else {
+			throw new VehicleNotPresentException("Vehicle is not added to remove it");
+		}
+	}
+	
+}

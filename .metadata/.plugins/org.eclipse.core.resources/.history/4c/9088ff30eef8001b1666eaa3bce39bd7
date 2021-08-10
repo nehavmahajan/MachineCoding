@@ -1,0 +1,61 @@
+package service;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Vector;
+
+import exceptions.VehicleNotPresentException;
+import model.Booking;
+import model.User;
+import model.Vehicle;
+import repository.BookingDuration;
+import repository.BookingMode;
+
+public class vehicleBookingService {
+	private adminService adminService = null;
+	private accountsService accountService = null;
+	LinkedList<Booking> bookingList = new LinkedList<Booking>();
+	
+	public vehicleBookingService() {
+		adminService = new adminService();
+		accountService = new accountsService();
+	}
+	public void pickVehicle(int vehicleId,int userId, String bookingTitle, int appointmentDate, String src, String dest,
+			BookingDuration bookingDuration, BookingMode bookingMode) {
+		
+		LocalDateTime currDate = java.time.LocalDateTime.now();
+		Vehicle vehicle = adminService.getVehicleMap().get(vehicleId);
+		User user = accountService.getUserMap().get(userId);
+		Booking b1 = new Booking(bookingTitle,currDate, appointmentDate, src, dest, bookingDuration, vehicle, user, bookingMode);
+		b1.setUser(user);
+		bookingList.add(b1);
+		bookVehicle(b1);
+	}
+	
+	public void bookVehicle(Booking b) {
+		b.getVehicle().setAvailability(b.getVehicle().getAvailability()-1);
+		Vector<Booking> v = b.getUser().getBooking();
+		bookingList.add(b);
+		v.add(b);	
+		b.getUser().setBooking(v);
+	}
+	
+	public void returnVehicle(int vehicleId ) throws VehicleNotPresentException {
+		HashMap<Integer , Vehicle > vehicleMap = adminService.getVehicleMap();
+		try {
+			if(!vehicleMap.containsKey(vehicleId)) {
+				throw new VehicleNotPresentException("\nVehicle is not in the list\n");
+			}
+			else {
+				Integer availability = vehicleMap.get((Integer)vehicleId).getAvailability()+1;
+				vehicleMap.get((Integer)vehicleId).setAvailability(availability);
+				adminService.setVehicleMap(vehicleMap);
+			}
+		} catch (VehicleNotPresentException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+}

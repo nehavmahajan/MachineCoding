@@ -1,0 +1,11 @@
+package services;
+
+public class OrderServiceImpl {
+	private OrderServiceImpl() {
+	
+	}
+	
+	public void placeOrder(String restaurantName, int quantity) {
+		
+	}
+}

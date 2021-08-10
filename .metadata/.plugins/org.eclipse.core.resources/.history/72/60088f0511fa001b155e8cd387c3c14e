@@ -1,0 +1,39 @@
+package services;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Vector;
+
+import exceptions.UserNotExistException;
+import models.Restaurant;
+import repository.sortRestaurantByPrice;
+import repository.sortRestaurantByRating;
+
+public class showRestaurantServiceImpl {
+	private static showRestaurantServiceImpl showRestaurantServiceImpl = null;
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private UserServiceImpl userSvc = UserServiceImpl.getInstance();
+	
+	private showRestaurantServiceImpl() {}
+	
+	public static showRestaurantServiceImpl getInstance() {
+		if(showRestaurantServiceImpl == null ) {
+			return new showRestaurantServiceImpl();
+		}
+		else {
+			return showRestaurantServiceImpl;
+		}
+	}
+	
+	public void showRestaurant(Vector<Restaurant> resto,String userId) {
+		System.out.println(userSvc.getUserMap().values());
+		String pinCode = userSvc.getUserMap().get(userId).getPincode();
+		for(Restaurant i : resto) {
+			if(i.getQuantity() > 0 && i.getPinCodes().contains(pinCode)) {
+				System.out.println(i.getResturantName() +", "+i.getFoodItem());
+			}
+		}
+	}
+
+	
+}

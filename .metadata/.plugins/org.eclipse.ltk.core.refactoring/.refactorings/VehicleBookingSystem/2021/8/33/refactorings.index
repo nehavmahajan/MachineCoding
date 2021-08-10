@@ -1,0 +1,26 @@
+1628437742671	Encapsulate field 'uName'
+1628438417524	Encapsulate field 'email'
+1628438445103	Encapsulate field 'city'
+1628438459938	Encapsulate field 'uid'
+1628438500743	Encapsulate field 'vehicleId'
+1628438511103	Encapsulate field 'user'
+1628438524049	Encapsulate field 'vehicleType'
+1628440644558	Encapsulate field 'mobNo'
+1628442131689	Move compilation unit
+1628442138452	Move compilation units
+1628442573561	Delete element
+1628443428253	Encapsulate field 'pwd'
+1628444601886	Encapsulate field 'availability'
+1628447642951	Move compilation unit
+1628448082770	Encapsulate field 'bookingId'
+1628448087759	Encapsulate field 'bookingTitle'
+1628448093230	Encapsulate field 'bookAppointmentDate'
+1628448099246	Encapsulate field 'bookedDateTime'
+1628448104079	Encapsulate field 'vehicle'
+1628448109583	Encapsulate field 'user'
+1628448115898	Encapsulate field 'bookingMode'
+1628448588329	Encapsulate field 'src'
+1628448594755	Encapsulate field 'dest'
+1628448632886	Encapsulate field 'bookingDuration'
+1628450825604	Encapsulate field 'booking'
+1628452904228	Inline local variable 'vehicle'

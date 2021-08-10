@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Vector;
+
+import model.Booking;
+import model.Vehicle;
+import repository.BookingDuration;
+import repository.BookingMode;
+import repository.VehicleType;
+import service.getAvailableVehiclesService;
+import service.modelObjectsCreationService;
+import service.vehicleBookingService;
+import service.*;
+
+public class Driver {
+	private modelObjectsCreationService mocs;
+	private getAvailableVehiclesService getAvailableVehicleSvc;
+	private vehicleBookingService vehicleService ;
+	private accountsService accountService ;
+	
+	public Driver() {
+		mocs= null;
+		getAvailableVehicleSvc = null;
+		vehicleService = null;
+		accountService = null;
+	}
+	
+	public static void main(String[] args) throws Exception	{
+		Driver d = new Driver();
+		BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+		//Vehicle v = null;
+		d.mocs.addUser(1,"nehamahajan@gmail.com","Neha","Nashik",763457, "ABC");
+		d.mocs.addUser(2,"nm@gmail.com","Nm","Nashik",764568,"nm");
+		d.mocs.addVehicles(1,VehicleType.SUV, null, 2 );
+		d.mocs.addVehicles(2,VehicleType.SEDAN, null, 3);
+		
+		System.out.println("Enter Uid for Login :");
+		int userId = Integer.parseInt(br.readLine());
+		
+		Vector<Vehicle> vehicle = d.getAvailableVehicleSvc.getAvailableVehicles();
+		System.out.println("Available for Booking are :");
+		for(Vehicle v : vehicle ) {
+			System.out.println(v.getVehicleType()+", "+v.getAvailability()+", "+ v.getVehicleId());
+		}
+		
+		System.out.println("Enter Details to Book Your Vehicle :");
+		int vehicleId;
+		String bookingTitle;
+		int appointmentDate;
+		String src;
+		String dest;
+		BookingDuration bookingDuration;
+		BookingMode bookingMode;
+		
+		vehicleId = Integer.parseInt(br.readLine());
+		bookingTitle = br.readLine();
+		appointmentDate = Integer.parseInt(br.readLine());
+		src = br.readLine();
+		dest = br.readLine();
+		bookingDuration = BookingDuration.valueOf(br.readLine().toUpperCase());
+		bookingMode = BookingMode.valueOf(br.readLine().toUpperCase());
+		
+		d.vehicleService.pickVehicle(vehicleId,userId, bookingTitle, appointmentDate, src, dest,bookingDuration, bookingMode);
+		vehicle = d.getAvailableVehicleSvc.getAvailableVehicles();
+		System.out.println("Available for Booking are :");
+		for(Vehicle v : vehicle ) {
+			System.out.println(v.getVehicleType()+", "+v.getAvailability()+", "+ v.getVehicleId());
+		}
+		
+		System.out.println("My Bookings are :");
+		Vector<Booking> bookings = d.accountService.getBookingDetails(userId);
+		for(Booking b : bookings ) {
+			
+			System.out.println(b.getBookingId()+", "+b.getBookAppointmentDate()+", "+ b.getBookingTitle() +", "+b.getBookedDateTime()+" "
+					+b.getBookingMode()+" "+b.getVehicle().getVehicleId()+" "+b.getSrc()+" "+b.getDest());
+		}
+	}
+
+		
+}

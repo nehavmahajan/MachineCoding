@@ -1,0 +1,10 @@
+package service;
+
+import model.User;
+
+public class modelObjectsCreationService {
+	public User addUser(int i, String string, String string2, String string3, int j, String string4) {
+		User u1 = new User(i,string, string2,string3,j,string4);
+		return u1;
+	}
+}

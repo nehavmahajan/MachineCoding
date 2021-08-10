@@ -1,0 +1,29 @@
+package Main;
+
+public class User {
+	private int uid;
+	private String uname;
+	private int umail;
+	
+	public User(int uid, String uname, int umail) {
+		this.uid = uid;
+		this.setUmail(umail);
+		this.setUname(uname);
+	}
+	public int getUid() {
+		return this.uid;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+	public int getUmail() {
+		return umail;
+	}
+	public void setUmail(int umail) {
+		this.umail = umail;
+	}
+	
+}

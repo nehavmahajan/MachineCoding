@@ -1,0 +1,61 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+
+import models.Rating;
+import models.Restaurant;
+
+public class RestaurantServiceImpl {
+	private static RestaurantServiceImpl restaurantServiceImpl = null;
+	public HashMap<String,Restaurant> restoMap = null;
+	
+	private RestaurantServiceImpl() {
+		setRestoMap(new HashMap<String,Restaurant>());
+	}
+	public static RestaurantServiceImpl getInstance() {
+		if(restaurantServiceImpl == null) {
+			return new RestaurantServiceImpl();
+		}
+		else {
+			return restaurantServiceImpl;
+		}
+	}
+	
+	public Restaurant registerRestaurant(String resturantName,String pinCodes, String foodItem, int foodItemPrice , int quantity,String userId) {
+		if(resturantName== "" || pinCodes == "" || foodItem == "" ) {
+			System.out.println("Input is incorrect");
+			return null;
+		}
+		Restaurant r = new Restaurant(resturantName, getPinCodes(pinCodes) , foodItem, foodItemPrice, quantity,userId) ;
+		this.getRestoMap().put(resturantName, r);
+		return r;
+	}
+	public void updateQuantity(String restoName, int quantity) {
+		this.restoMap.get(restoName).setQuantity(quantity);
+		System.out.println(restoMap.get(restoName).getResturantName()+"-"+restoMap.get(restoName).getFoodItem()+"-"+restoMap.get(restoName).getQuantity());
+	}
+	private ArrayList<String> getPinCodes(String pinCodes) {
+		ArrayList<String>  pinCodeList = new ArrayList<String>();
+		String [] pins = pinCodes.split("/");
+		for(String  i : pins) {
+			pinCodeList.add(i);
+		}
+		return pinCodeList;
+	}
+	public void updateLocation(String restoName, String pinCodes) {
+		this.getRestoMap().get(restoName).setPinCodes(getPinCodes(pinCodes));
+		System.out.println(restoMap.get(restoName).getResturantName()+"-"+restoMap.get(restoName).getFoodItem()+"-"+restoMap.get(restoName).getPinCodes());
+	}
+			
+	/*------------------------------------------------------------------------------*/
+	
+	public HashMap<String,Restaurant> getRestoMap() {
+		return restoMap;
+	}
+	public void setRestoMap(HashMap<String,Restaurant> restoMap) {
+		this.restoMap = restoMap;
+	}
+	
+}

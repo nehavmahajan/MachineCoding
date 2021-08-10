@@ -1,0 +1,8 @@
+package dao;
+
+public interface UserService {
+	
+	public static void registerUser() {
+		
+	}
+}

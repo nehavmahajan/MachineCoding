@@ -1,0 +1,16 @@
+import model.User;
+import model.Vehicle;
+import model.VehicleType;
+
+public class Driver {
+	public static void main(String[] args)	{
+		User u = new User(1,"nehamahajn@gmil.com","Neha","nasik", 985759);
+		
+		Vehicle v= new Vehicle();
+		v.setVehicleId(1);
+		v.setUser(u);
+		v.setVehicleType(VehicleType.SEDAN);
+		
+		
+	}	
+}

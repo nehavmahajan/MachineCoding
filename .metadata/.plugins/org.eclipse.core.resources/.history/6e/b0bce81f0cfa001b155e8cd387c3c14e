@@ -1,0 +1,47 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import models.Rating;
+
+public class RatingServiceImpl {
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
+	private static RatingServiceImpl ratingServiceImpl =null;
+	private HashMap<String,ArrayList<Rating>> ratingMap = null;
+	private RatingServiceImpl() {
+		setRatingMap(new HashMap<String,ArrayList<Rating>>());
+	}
+	public static RatingServiceImpl getInstance() {
+		if(ratingServiceImpl == null) {
+			return new RatingServiceImpl();
+		}
+		else {
+			return ratingServiceImpl;
+		}
+	}
+	
+	public void createReview(String restoName, int ranking, String comment,String userId) {
+		if(ranking< 0 || ranking>5) {
+			System.out.println("Rating is wrongly provided");
+			return;
+		}
+		Rating r = new Rating(restoName, ranking,comment,userId);
+		this.getRatingMap().get(restoName).add(r);
+		
+		ArrayList<Rating> ratingsList= this.getRatingMap().get(restoName);
+		int sum = 0;
+		for (Rating r1 : ratingsList ) {
+			sum+=r1.getRatingnumber();
+		}
+		restaurantServiceImpl.getRestoMap().get(restoName).setRating(sum/ratingsList.size());
+	}
+	
+	public HashMap<String,ArrayList<Rating>> getRatingMap() {
+		return ratingMap;
+	}
+	public void setRatingMap(HashMap<String,ArrayList<Rating>> ratingMap) {
+		this.ratingMap = ratingMap;
+	}
+}

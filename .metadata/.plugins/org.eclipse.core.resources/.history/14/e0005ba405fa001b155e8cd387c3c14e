@@ -1,0 +1,39 @@
+import exceptions.UserNotExistException;
+import repository.Gender;
+import services.OrderServiceImpl;
+import services.RatingServiceImpl;
+import services.RestaurantServiceImpl;
+import services.UserServiceImpl;
+import services.showRestaurantServiceImpl;
+
+public class Driver {
+	private OrderServiceImpl orderServiceImpl = OrderServiceImpl.getInstance() ;
+	private UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
+	private RestaurantServiceImpl restaurantServiceImpl = RestaurantServiceImpl.getInstance();
+	private RatingServiceImpl ratingServiceImpl = RatingServiceImpl.getInstance();
+	private showRestaurantServiceImpl showRestaurantSvcImpl = showRestaurantServiceImpl.getInstance();
+	
+	public Driver() {
+	}
+	public static String phoneNumber = "";
+	public static void main(String args[]) throws UserNotExistException {
+		Driver d = new Driver();
+		d.userServiceImpl.registerUser("Pralove", Gender.MALE, "phoneNumber-1", "HSR");
+		d.userServiceImpl.registerUser("Nitesh", Gender.MALE, "phoneNumber-2", "BTM");
+		d.userServiceImpl.registerUser("Vatsal", Gender.MALE, "phoneNumber-3", "BTM");
+		
+		phoneNumber = d.userServiceImpl.login("phoneNumber-1");
+		
+		d.restaurantServiceImpl.registerRestaurant("Food Court-1", "BTM/HSR", "NI Thali", 100, 5, phoneNumber );
+		d.restaurantServiceImpl.registerRestaurant("Food Court-2", "BTM", "Burger", 120, 3, phoneNumber);
+		
+		phoneNumber = d.userServiceImpl.login("phoneNumber-2");
+		d.restaurantServiceImpl.registerRestaurant("Food Court-3", "HSR", "SI Thali", 100, 1, phoneNumber );
+		
+		phoneNumber = d.userServiceImpl.login("phoneNumber-3");
+		d.showRestaurantSvcImpl.showRestaurant(d.showRestaurantSvcImpl.sortRestaurant("price"), phoneNumber);
+		
+		d.orderServiceImpl.placeOrder(phoneNumber, "Food Court-1", 2);
+		
+	}
+}
